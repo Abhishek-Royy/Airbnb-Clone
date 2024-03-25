@@ -1,0 +1,35 @@
+const images = [
+  "https://a0.muscache.com/im/pictures/1538239a-c39d-4d21-83c9-7b6b685e2e30.jpg?im_w=720",
+  "https://a0.muscache.com/im/pictures/miso/Hosting-50647280/original/9ea9db37-2a5e-4729-9a3d-c71c31b297f2.jpeg?im_w=720",
+  "https://a0.muscache.com/im/pictures/3ec05463-d104-4a09-a52a-516ec6965937.jpg?im_w=720",
+
+  // Add more image URLs here if needed
+];
+
+let currentIndex = 0;
+const sliderImage = document.querySelector(".slider-image");
+
+function changeImage() {
+  sliderImage.src = images[currentIndex];
+  currentIndex = (currentIndex + 1) % images.length;
+}
+
+// Change image every 5 seconds
+setInterval(changeImage, 2000);
+
+
+
+
+
+    // card.innerHTML = `
+    //     <div class="image">
+    //       <img src="${place.image}" alt="${place.name}" />
+    //     </div>
+    //     <div class="name">
+    //       <h2>${place.name}</h2>
+    //       <p><i class="ri-star-s-fill"></i> ${place.rate}</p>
+    //     </div>
+    //     <div class="price">
+    //       <p>${place.price}</p>
+    //     </div>
+    //   `;
