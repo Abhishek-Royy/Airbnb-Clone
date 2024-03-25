@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector(".search");
+  const btns = document.querySelectorAll(".search");
+  const cardsContainer = document.querySelector(".cards-all");
+
+  let isLoading = document.querySelector("#loading");
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -21,76 +24,59 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "GET",
         headers: {
           "X-RapidAPI-Key":
-            "614f8a7d37msh7ad07e10a05b3bbp105d31jsnb5fd680ed071",
+            "661fe397f5msh04776212a7a735cp166659jsn7fd82bc0a017",
           "X-RapidAPI-Host": "airbnb13.p.rapidapi.com",
         },
       };
 
       const response = await fetch(url, options);
       const result = await response.json();
-      const rawData = await result.results;
-      console.log(rawData);
-
-      let city = rawData[0].city;
-      let thumbnail = rawData[0].images[0];
-      let hotelname = rawData[0].name;
-      // let facility=rawData[0].previewAmenities[0],previewAmenities[1],previewAmenities[2];
-      let facility = [
-        rawData[0].previewAmenities[0],
-        rawData[0].previewAmenities[1],
-        rawData[0].previewAmenities[2],
-      ];
-
-      console.log(city, thumbnail, hotelname, facility);
-
-      // Assuming you have a div with class "card" where you want to display the result
-      const card = document.querySelector(".card");
+      const rawData = result.results;
 
       // Clear previous search results
-      card.innerHTML = "";
+      cardsContainer.innerHTML = ""; // Changed card to cardsContainer
 
       // Assuming result is an array of places
-      result.forEach((place) => {
-        card.innerHTML += `
+      rawData.forEach((place) => {
+        const city = place.city;
+        const thumbnail = place.images[0];
+        const hotelname = place.name;
+        const rate = place.rating;
+        const price = place.price.priceItems[0];
+
+        // Create card element
+        const card = document.createElement("div");
+        card.classList.add("card"); // Add card class to the created element
+        card.innerHTML = `
           <div class="image">
             <img src="${thumbnail}" alt="${city}" />
           </div>
           <div class="name">
-            <h2>${city}</h2>
-            <p><i class="ri-star-s-fill"></i> ${place.rate}</p>
+            <h5>${hotelname}</h5>
+            <p><i class="ri-star-s-fill"></i> ${rate}</p>
           </div>
           <div class="price">
-            <p>${place.price}</p>
+            <p>${city}</p>
+            <p>₹:${price.amount}</p>
           </div>
         `;
+
+        // Append card to the cardsContainer
+        cardsContainer.appendChild(card);
       });
+
+      cardsContainer.style.display = "flex";
     } catch (error) {
       console.error(error);
     }
   };
 
-  btn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    await fetchData();
+  // Attach event listeners to all buttons with class "search"
+  btns.forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      isLoading.style.display = "block";
+      await fetchData();
+    });
   });
 });
-
-// FOR OTHERS PAGE
-const images = [
-  "https://a0.muscache.com/im/pictures/1538239a-c39d-4d21-83c9-7b6b685e2e30.jpg?im_w=720",
-  "https://a0.muscache.com/im/pictures/miso/Hosting-50647280/original/9ea9db37-2a5e-4729-9a3d-c71c31b297f2.jpeg?im_w=720",
-  "https://a0.muscache.com/im/pictures/3ec05463-d104-4a09-a52a-516ec6965937.jpg?im_w=720",
-
-  // Add more image URLs here if needed
-];
-
-let currentIndex = 0;
-const sliderImage = document.querySelector(".slider-image");
-
-function changeImage() {
-  sliderImage.src = images[currentIndex];
-  currentIndex = (currentIndex + 1) % images.length;
-}
-
-// Change image every 5 seconds
-setInterval(changeImage, 2000);

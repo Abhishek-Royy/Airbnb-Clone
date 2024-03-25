@@ -33,3 +33,31 @@ setInterval(changeImage, 2000);
     //       <p>${place.price}</p>
     //     </div>
     //   `;
+
+
+
+
+
+
+    <main>
+      <div class="container">
+        <div class="data-3">
+          <div class="cards">
+            <div class="image-slider">
+              <img
+                class="slider-image"
+                src="https://a0.muscache.com/im/pictures/1538239a-c39d-4d21-83c9-7b6b685e2e30.jpg?im_w=720"
+                alt=""
+              />
+            </div>
+            <div class="name">
+              <h2>Palerom, India</h2>
+              <p><i class="ri-star-s-fill"></i> 4.82</p>
+            </div>
+            <div class="price">
+              <p>4,175/night</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
